@@ -28,15 +28,10 @@ def dataRetrieval(tickersParam, indiceParam: str, startParam: str, endParam: str
     elif isinstance(tickersParam, list):
         tickers = tickersParam
     
-    start_date = startParam
-    end_date = endParam
-    interval = intervalParam
-    mode = modeParam
-
-    stock_prices = yf.download(tickers, start= start_date, end= end_date, interval= interval)[mode]
+    stock_prices = yf.download(tickers, start= startParam, end= endParam, interval= intervalParam)[modeParam]
     stock_returns = np.log(stock_prices/stock_prices.shift(1))
 
-    market_price = yf.download(indiceParam, start= start_date, end= end_date, interval= interval)[mode]
+    market_price = yf.download(indiceParam, start= startParam, end= endParam, interval= intervalParam)[modeParam]
     market_return = np.log(market_price/market_price.shift(1))
 
     returns = pd.concat([stock_returns, market_return], axis=1)
